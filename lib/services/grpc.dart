@@ -24,7 +24,17 @@ class GrpcClient {
         credentials: ChannelCredentials.insecure(),
       ),
     );
+    
     _stub = ReversiGameServiceClient(_channel);
+    try {
+      final response = await stub.sendMessage(
+        MessageRequest()..message = 'Conectado',
+        options: CallOptions(compression: const GzipCodec()),
+      );
+      print('Greeter client received: ${response.status}');
+    } catch (e) {
+      print('CAiu aqui Caught error: $e');
+    }
   }
 
   // Método para obter o stub e fazer a comunicação com o servidor
@@ -38,11 +48,15 @@ class GrpcClient {
   }
 
   // Enviar uma mensagem (como um chat entre os jogadores)
-  Future<MessageResponse> sendMessage(String message) async {
+  Future<String> sendMessage(String message) async {
     try {
-      final request = MessageRequest()..message = message;
-      final response = await stub.sendMessage(request);
-      return response;
+      // final request = MessageRequest()..message = message;
+      final response = await stub.sendMessage(
+        MessageRequest()..message = 'Teste',
+        options: CallOptions(compression: const GzipCodec()),
+      );
+      print('Greeter client received: ${response.status}');
+      return response.status;
     } catch (e) {
       rethrow;
     }

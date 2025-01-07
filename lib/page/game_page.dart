@@ -28,7 +28,7 @@ class _GamePageState extends State<GamePage> {
     super.initState();
     _client = GrpcClient(); // Instanciando o Singleton
     _initializeGrpcClient();
-    _handleComingMessages(); // Alterado para o método gRPC
+    // _handleComingMessages(); // Alterado para o método gRPC
     _initializeBoard();
   }
 
@@ -80,42 +80,42 @@ class _GamePageState extends State<GamePage> {
     _client.giveUp(black ? 'black' : 'white');
   }
 
-  void _handleComingMessages() async {
-    try {
-      await for (var move in _client.sendBoardMove(BoardMoveRequest())) {
-        setState(() {
-          _flipPieces(move.boardH, move.boardV, black ? 0 : 1);
-          _board[move.boardH][move.boardV] = !black ? blackColor : whiteColor;
-          _turnStart();
-        });
-      }
+  // void _handleComingMessages() async {
+  //   try {
+  //     await for (var move in _client.sendBoardMove(BoardMoveRequest())) {
+  //       setState(() {
+  //         _flipPieces(move.boardH, move.boardV, black ? 0 : 1);
+  //         _board[move.boardH][move.boardV] = !black ? blackColor : whiteColor;
+  //         _turnStart();
+  //       });
+  //     }
 
-      await for (var endTurn in _client.turnEnd()) {
-        setState(() {
-          canPlay = true;
-        });
-      }
+  //     await for (var endTurn in _client.turnEnd()) {
+  //       setState(() {
+  //         canPlay = true;
+  //       });
+  //     }
 
-      await for (var firstPlayer in _client.firstPlayer()) {
-        _hasFirst();
-      }
+  //     await for (var firstPlayer in _client.firstPlayer()) {
+  //       _hasFirst();
+  //     }
 
-      await for (var giveUp in _client.giveUp()) {
-        _showGiveUpRequest();
-      }
+  //     await for (var giveUp in _client.giveUp()) {
+  //       _showGiveUpRequest();
+  //     }
 
-      await for (var acceptGiveUp in _client.acceptGiveUp()) {
-        final SnackBar snackbar = SnackBar(
-          content: Text(Messages.loseByGivingUp),
-          backgroundColor: Colors.red,
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-        _resetBoard();
-      }
-    } catch (e) {
-      print('Error receiving gRPC messages: $e');
-    }
-  }
+  //     await for (var acceptGiveUp in _client.acceptGiveUp()) {
+  //       final SnackBar snackbar = SnackBar(
+  //         content: Text(Messages.loseByGivingUp),
+  //         backgroundColor: Colors.red,
+  //       );
+  //       ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  //       _resetBoard();
+  //     }
+  //   } catch (e) {
+  //     print('Error receiving gRPC messages: $e');
+  //   }
+  // }
 
   void _showGiveUpRequest() async {
     showDialog(
@@ -169,7 +169,7 @@ class _GamePageState extends State<GamePage> {
       backgroundColor: Colors.green,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
-    _client.acceptGiveUp();
+    // _client.acceptGiveUp();
     _resetBoard();
   }
 

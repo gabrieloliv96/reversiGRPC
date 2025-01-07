@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:reversigrpc/enum/message.dart';
 import 'package:reversigrpc/enum/socket_events.dart';
-
-import '../services/socket.dart';
+import 'package:reversigrpc/services/grpc.dart';
 
 class ChatClient extends StatefulWidget {
   const ChatClient({
@@ -15,34 +14,39 @@ class ChatClient extends StatefulWidget {
 
 class _ChatClientState extends State<ChatClient> {
   final TextEditingController _textController = TextEditingController();
-  final _client = SocketClient();
+  late GrpcClient _client;
   final FocusNode _messageFocusNode = FocusNode();
   List<Message> mensagens = [];
 
   @override
   void initState() {
-    _client.connect();
-    _handleReceviedMessages();
+    _client = GrpcClient(); // Instanciando o Singleton
+    _initializeGrpcClient();
+    // _handleReceviedMessages();
     super.initState();
   }
 
-  void _handleReceviedMessages() {
-    _client.socket.on(
-      SocketEvents.message.event,
-      (message) {
-        setState(
-          () {
-            mensagens.add(
-              Message(
-                mensagem: message,
-                isSent: false,
-              ),
-            );
-          },
-        );
-      },
-    );
+  Future<void> _initializeGrpcClient() async {
+    await _client.init();
   }
+
+  // void _handleReceviedMessages() {
+  //   _client.socket.on(
+  //     SocketEvents.message.event,
+  //     (message) {
+  //       setState(
+  //         () {
+  //           mensagens.add(
+  //             Message(
+  //               mensagem: message,
+  //               isSent: false,
+  //             ),
+  //           );
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +105,7 @@ class _ChatClientState extends State<ChatClient> {
               Expanded(
                 child: TextField(
                   onSubmitted: (value) {
-                    _sendMessage();
+                    // _sendMessage();
                   },
                   controller: _textController,
                   focusNode: _messageFocusNode,
@@ -116,7 +120,7 @@ class _ChatClientState extends State<ChatClient> {
               ),
               TextButton(
                 onPressed: () {
-                  _sendMessage();
+                  // _sendMessage();
                 },
                 child: const Row(
                   children: [
@@ -131,15 +135,15 @@ class _ChatClientState extends State<ChatClient> {
     );
   }
 
-  void _sendMessage() {
-    if (_textController.text.isNotEmpty) {
-      mensagens.add(
-        Message(mensagem: _textController.text),
-      );
-      _client.sendMessage(message: _textController.text);
-      _textController.clear();
-      _messageFocusNode.requestFocus();
-      setState(() {});
-    }
-  }
+  // void _sendMessage() {
+  //   if (_textController.text.isNotEmpty) {
+  //     mensagens.add(
+  //       Message(mensagem: _textController.text),
+  //     );
+  //     _client.sendMessage(message: _textController.text);
+  //     _textController.clear();
+  //     _messageFocusNode.requestFocus();
+  //     setState(() {});
+  //   }
+  // }
 }

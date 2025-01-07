@@ -48,8 +48,8 @@ class ReversiGameServiceClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseStream<$0.MessageResponse> sendMessage($0.MessageRequest request, {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$sendMessage, $async.Stream.fromIterable([request]), options: options);
+  $grpc.ResponseFuture<$0.MessageResponse> sendMessage($0.MessageRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$sendMessage, request, options: options);
   }
 
   $grpc.ResponseStream<$0.BoardMoveResponse> sendBoardMove($0.BoardMoveRequest request, {$grpc.CallOptions? options}) {
@@ -78,7 +78,7 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
         'SendMessage',
         sendMessage_Pre,
         false,
-        true,
+        false,
         ($core.List<$core.int> value) => $0.MessageRequest.fromBuffer(value),
         ($0.MessageResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.BoardMoveRequest, $0.BoardMoveResponse>(
@@ -111,8 +111,8 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
         ($0.FirstPlayerResponse value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$0.MessageResponse> sendMessage_Pre($grpc.ServiceCall call, $async.Future<$0.MessageRequest> request) async* {
-    yield* sendMessage(call, await request);
+  $async.Future<$0.MessageResponse> sendMessage_Pre($grpc.ServiceCall call, $async.Future<$0.MessageRequest> request) async {
+    return sendMessage(call, await request);
   }
 
   $async.Stream<$0.BoardMoveResponse> sendBoardMove_Pre($grpc.ServiceCall call, $async.Future<$0.BoardMoveRequest> request) async* {
@@ -131,7 +131,7 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
     yield* firstPlayer(call, await request);
   }
 
-  $async.Stream<$0.MessageResponse> sendMessage($grpc.ServiceCall call, $0.MessageRequest request);
+  $async.Future<$0.MessageResponse> sendMessage($grpc.ServiceCall call, $0.MessageRequest request);
   $async.Stream<$0.BoardMoveResponse> sendBoardMove($grpc.ServiceCall call, $0.BoardMoveRequest request);
   $async.Stream<$0.GiveUpResponse> giveUp($grpc.ServiceCall call, $0.GiveUpRequest request);
   $async.Stream<$0.TurnEndResponse> turnEnd($grpc.ServiceCall call, $0.TurnEndRequest request);

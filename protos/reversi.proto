@@ -5,7 +5,7 @@ package reversi;
 // Serviço para o jogo Reversi
 service ReversiGameService {
   // Envia uma mensagem para o chat
-  rpc SendMessage (MessageRequest) returns (stream MessageResponse);
+  rpc SendMessage (MessageRequest) returns ( MessageResponse) {};
 
   // Envia o movimento do jogador no tabuleiro
   rpc SendBoardMove (BoardMoveRequest) returns (stream BoardMoveResponse);

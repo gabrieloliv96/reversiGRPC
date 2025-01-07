@@ -41,6 +41,10 @@ class ReversiGameServiceClient extends $grpc.Client {
       '/reversi.ReversiGameService/FirstPlayer',
       ($0.FirstPlayerRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.FirstPlayerResponse.fromBuffer(value));
+  static final _$initializeClients = $grpc.ClientMethod<$0.InitializeRequest, $0.InitializeResponse>(
+      '/reversi.ReversiGameService/InitializeClients',
+      ($0.InitializeRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.InitializeResponse.fromBuffer(value));
 
   ReversiGameServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -66,6 +70,10 @@ class ReversiGameServiceClient extends $grpc.Client {
 
   $grpc.ResponseStream<$0.FirstPlayerResponse> firstPlayer($0.FirstPlayerRequest request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$firstPlayer, $async.Stream.fromIterable([request]), options: options);
+  }
+
+  $grpc.ResponseFuture<$0.InitializeResponse> initializeClients($0.InitializeRequest request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$initializeClients, request, options: options);
   }
 }
 
@@ -109,6 +117,13 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.FirstPlayerRequest.fromBuffer(value),
         ($0.FirstPlayerResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.InitializeRequest, $0.InitializeResponse>(
+        'InitializeClients',
+        initializeClients_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.InitializeRequest.fromBuffer(value),
+        ($0.InitializeResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.MessageResponse> sendMessage_Pre($grpc.ServiceCall call, $async.Future<$0.MessageRequest> request) async {
@@ -131,9 +146,14 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
     yield* firstPlayer(call, await request);
   }
 
+  $async.Future<$0.InitializeResponse> initializeClients_Pre($grpc.ServiceCall call, $async.Future<$0.InitializeRequest> request) async {
+    return initializeClients(call, await request);
+  }
+
   $async.Future<$0.MessageResponse> sendMessage($grpc.ServiceCall call, $0.MessageRequest request);
   $async.Stream<$0.BoardMoveResponse> sendBoardMove($grpc.ServiceCall call, $0.BoardMoveRequest request);
   $async.Stream<$0.GiveUpResponse> giveUp($grpc.ServiceCall call, $0.GiveUpRequest request);
   $async.Stream<$0.TurnEndResponse> turnEnd($grpc.ServiceCall call, $0.TurnEndRequest request);
   $async.Stream<$0.FirstPlayerResponse> firstPlayer($grpc.ServiceCall call, $0.FirstPlayerRequest request);
+  $async.Future<$0.InitializeResponse> initializeClients($grpc.ServiceCall call, $0.InitializeRequest request);
 }

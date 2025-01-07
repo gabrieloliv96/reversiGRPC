@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:grpc/grpc.dart';
 import '../generated/reversi.pb.dart'; // Importa as mensagens geradas
 import '../generated/reversi.pbgrpc.dart'; // Importa o stub gerado
@@ -16,7 +18,7 @@ class GrpcClient {
   }
 
   // Inicializa o canal e o stub, caso ainda não estejam configurados
-  Future<void> init() async {
+  Future<void> init(String message) async {
     _channel = ClientChannel(
       'localhost', // Endereço do servidor gRPC
       port: 50051, // Porta do servidor
@@ -24,17 +26,17 @@ class GrpcClient {
         credentials: ChannelCredentials.insecure(),
       ),
     );
-    
+
     _stub = ReversiGameServiceClient(_channel);
+
     try {
-      final response = await stub.sendMessage(
-        MessageRequest()..message = 'Conectado',
-        options: CallOptions(compression: const GzipCodec()),
+      print('Tentando conectar com o uid');
+      final response = await _stub.initializeClients(
+        InitializeRequest()..playerName = 'Inicializar',
       );
-      print('Greeter client received: ${response.status}');
-    } catch (e) {
-      print('CAiu aqui Caught error: $e');
-    }
+
+      print('Jogador ID: ${response.playerId}');
+    } catch (e) {}
   }
 
   // Método para obter o stub e fazer a comunicação com o servidor
@@ -48,17 +50,18 @@ class GrpcClient {
   }
 
   // Enviar uma mensagem (como um chat entre os jogadores)
-  Future<String> sendMessage(String message) async {
+  Future<String> sendMessage(String sender, String content) async {
     try {
-      // final request = MessageRequest()..message = message;
-      final response = await stub.sendMessage(
-        MessageRequest()..message = 'Teste',
-        options: CallOptions(compression: const GzipCodec()),
-      );
-      print('Greeter client received: ${response.status}');
-      return response.status;
+      final request = MessageRequest()
+        ..sender = sender
+        ..content = content;
+
+      final response = await _stub.sendMessage(request);
+      print('Resposta do servidor: ${response.reply}');
+      return response.reply;
     } catch (e) {
-      rethrow;
+      print('Erro ao enviar mensagem: $e');
+      return 'Erro ao enviar mensagem';
     }
   }
 

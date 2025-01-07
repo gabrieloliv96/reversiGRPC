@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:reversigrpc/enum/message.dart';
-import 'package:reversigrpc/enum/socket_events.dart';
 import 'package:reversigrpc/services/grpc.dart';
 
 class ChatClient extends StatefulWidget {
@@ -27,7 +26,7 @@ class _ChatClientState extends State<ChatClient> {
   }
 
   Future<void> _initializeGrpcClient() async {
-    await _client.init();
+    await _client.init('Chat inicializado');
   }
 
   // void _handleReceviedMessages() {

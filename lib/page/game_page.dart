@@ -27,14 +27,14 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     super.initState();
     _client = GrpcClient(); // Instanciando o Singleton
-    _initializeGrpcClient();
+    // _initializeGrpcClient();
     // _handleComingMessages(); // Alterado para o método gRPC
     _initializeBoard();
   }
 
-  Future<void> _initializeGrpcClient() async {
-    await _client.init();
-  }
+  // Future<void> _initializeGrpcClient() async {
+  //   await _client.init('Game');
+  // }
 
   void _initializeBoard() {
     _board[3][3] = whiteColor;

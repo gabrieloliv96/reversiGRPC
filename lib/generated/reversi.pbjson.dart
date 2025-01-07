@@ -13,29 +13,59 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use initializeRequestDescriptor instead')
+const InitializeRequest$json = {
+  '1': 'InitializeRequest',
+  '2': [
+    {'1': 'player_name', '3': 1, '4': 1, '5': 9, '10': 'playerName'},
+  ],
+};
+
+/// Descriptor for `InitializeRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List initializeRequestDescriptor = $convert.base64Decode(
+    'ChFJbml0aWFsaXplUmVxdWVzdBIfCgtwbGF5ZXJfbmFtZRgBIAEoCVIKcGxheWVyTmFtZQ==');
+
+@$core.Deprecated('Use initializeResponseDescriptor instead')
+const InitializeResponse$json = {
+  '1': 'InitializeResponse',
+  '2': [
+    {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'player_id', '3': 2, '4': 1, '5': 9, '10': 'playerId'},
+  ],
+};
+
+/// Descriptor for `InitializeResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List initializeResponseDescriptor = $convert.base64Decode(
+    'ChJJbml0aWFsaXplUmVzcG9uc2USGAoHbWVzc2FnZRgBIAEoCVIHbWVzc2FnZRIbCglwbGF5ZX'
+    'JfaWQYAiABKAlSCHBsYXllcklk');
+
 @$core.Deprecated('Use messageRequestDescriptor instead')
 const MessageRequest$json = {
   '1': 'MessageRequest',
   '2': [
-    {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'sender', '3': 1, '4': 1, '5': 9, '10': 'sender'},
+    {'1': 'content', '3': 2, '4': 1, '5': 9, '10': 'content'},
   ],
 };
 
 /// Descriptor for `MessageRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List messageRequestDescriptor = $convert.base64Decode(
-    'Cg5NZXNzYWdlUmVxdWVzdBIYCgdtZXNzYWdlGAEgASgJUgdtZXNzYWdl');
+    'Cg5NZXNzYWdlUmVxdWVzdBIWCgZzZW5kZXIYASABKAlSBnNlbmRlchIYCgdjb250ZW50GAIgAS'
+    'gJUgdjb250ZW50');
 
 @$core.Deprecated('Use messageResponseDescriptor instead')
 const MessageResponse$json = {
   '1': 'MessageResponse',
   '2': [
     {'1': 'status', '3': 1, '4': 1, '5': 9, '10': 'status'},
+    {'1': 'reply', '3': 2, '4': 1, '5': 9, '10': 'reply'},
   ],
 };
 
 /// Descriptor for `MessageResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List messageResponseDescriptor = $convert.base64Decode(
-    'Cg9NZXNzYWdlUmVzcG9uc2USFgoGc3RhdHVzGAEgASgJUgZzdGF0dXM=');
+    'Cg9NZXNzYWdlUmVzcG9uc2USFgoGc3RhdHVzGAEgASgJUgZzdGF0dXMSFAoFcmVwbHkYAiABKA'
+    'lSBXJlcGx5');
 
 @$core.Deprecated('Use boardMoveRequestDescriptor instead')
 const BoardMoveRequest$json = {

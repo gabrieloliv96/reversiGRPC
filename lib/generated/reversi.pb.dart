@@ -13,14 +13,133 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-/// Mensagem de envio de uma mensagem no chat
-class MessageRequest extends $pb.GeneratedMessage {
-  factory MessageRequest({
+/// Mensagem de inicialização
+class InitializeRequest extends $pb.GeneratedMessage {
+  factory InitializeRequest({
+    $core.String? playerName,
+  }) {
+    final $result = create();
+    if (playerName != null) {
+      $result.playerName = playerName;
+    }
+    return $result;
+  }
+  InitializeRequest._() : super();
+  factory InitializeRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory InitializeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'InitializeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'reversi'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'playerName')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  InitializeRequest clone() => InitializeRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  InitializeRequest copyWith(void Function(InitializeRequest) updates) => super.copyWith((message) => updates(message as InitializeRequest)) as InitializeRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static InitializeRequest create() => InitializeRequest._();
+  InitializeRequest createEmptyInstance() => create();
+  static $pb.PbList<InitializeRequest> createRepeated() => $pb.PbList<InitializeRequest>();
+  @$core.pragma('dart2js:noInline')
+  static InitializeRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InitializeRequest>(create);
+  static InitializeRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get playerName => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set playerName($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPlayerName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPlayerName() => clearField(1);
+}
+
+class InitializeResponse extends $pb.GeneratedMessage {
+  factory InitializeResponse({
     $core.String? message,
+    $core.String? playerId,
   }) {
     final $result = create();
     if (message != null) {
       $result.message = message;
+    }
+    if (playerId != null) {
+      $result.playerId = playerId;
+    }
+    return $result;
+  }
+  InitializeResponse._() : super();
+  factory InitializeResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory InitializeResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'InitializeResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'reversi'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..aOS(2, _omitFieldNames ? '' : 'playerId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  InitializeResponse clone() => InitializeResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  InitializeResponse copyWith(void Function(InitializeResponse) updates) => super.copyWith((message) => updates(message as InitializeResponse)) as InitializeResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static InitializeResponse create() => InitializeResponse._();
+  InitializeResponse createEmptyInstance() => create();
+  static $pb.PbList<InitializeResponse> createRepeated() => $pb.PbList<InitializeResponse>();
+  @$core.pragma('dart2js:noInline')
+  static InitializeResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<InitializeResponse>(create);
+  static InitializeResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get message => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set message($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMessage() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMessage() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get playerId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set playerId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPlayerId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPlayerId() => clearField(2);
+}
+
+/// Mensagem de envio de uma mensagem no chat
+class MessageRequest extends $pb.GeneratedMessage {
+  factory MessageRequest({
+    $core.String? sender,
+    $core.String? content,
+  }) {
+    final $result = create();
+    if (sender != null) {
+      $result.sender = sender;
+    }
+    if (content != null) {
+      $result.content = content;
     }
     return $result;
   }
@@ -29,7 +148,8 @@ class MessageRequest extends $pb.GeneratedMessage {
   factory MessageRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MessageRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'reversi'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..aOS(1, _omitFieldNames ? '' : 'sender')
+    ..aOS(2, _omitFieldNames ? '' : 'content')
     ..hasRequiredFields = false
   ;
 
@@ -55,22 +175,35 @@ class MessageRequest extends $pb.GeneratedMessage {
   static MessageRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get message => $_getSZ(0);
+  $core.String get sender => $_getSZ(0);
   @$pb.TagNumber(1)
-  set message($core.String v) { $_setString(0, v); }
+  set sender($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasMessage() => $_has(0);
+  $core.bool hasSender() => $_has(0);
   @$pb.TagNumber(1)
-  void clearMessage() => clearField(1);
+  void clearSender() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get content => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set content($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasContent() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearContent() => clearField(2);
 }
 
 class MessageResponse extends $pb.GeneratedMessage {
   factory MessageResponse({
     $core.String? status,
+    $core.String? reply,
   }) {
     final $result = create();
     if (status != null) {
       $result.status = status;
+    }
+    if (reply != null) {
+      $result.reply = reply;
     }
     return $result;
   }
@@ -80,6 +213,7 @@ class MessageResponse extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MessageResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'reversi'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'status')
+    ..aOS(2, _omitFieldNames ? '' : 'reply')
     ..hasRequiredFields = false
   ;
 
@@ -112,6 +246,15 @@ class MessageResponse extends $pb.GeneratedMessage {
   $core.bool hasStatus() => $_has(0);
   @$pb.TagNumber(1)
   void clearStatus() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get reply => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set reply($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasReply() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearReply() => clearField(2);
 }
 
 /// Mensagem para o movimento do jogador no tabuleiro

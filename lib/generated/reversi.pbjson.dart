@@ -13,6 +13,20 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
+@$core.Deprecated('Use chatMessageDescriptor instead')
+const ChatMessage$json = {
+  '1': 'ChatMessage',
+  '2': [
+    {'1': 'sender', '3': 1, '4': 1, '5': 9, '10': 'sender'},
+    {'1': 'content', '3': 2, '4': 1, '5': 9, '10': 'content'},
+  ],
+};
+
+/// Descriptor for `ChatMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List chatMessageDescriptor = $convert.base64Decode(
+    'CgtDaGF0TWVzc2FnZRIWCgZzZW5kZXIYASABKAlSBnNlbmRlchIYCgdjb250ZW50GAIgASgJUg'
+    'djb250ZW50');
+
 @$core.Deprecated('Use initializeRequestDescriptor instead')
 const InitializeRequest$json = {
   '1': 'InitializeRequest',

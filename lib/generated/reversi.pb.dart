@@ -13,6 +13,71 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+/// Mensagem do Chat
+class ChatMessage extends $pb.GeneratedMessage {
+  factory ChatMessage({
+    $core.String? sender,
+    $core.String? content,
+  }) {
+    final $result = create();
+    if (sender != null) {
+      $result.sender = sender;
+    }
+    if (content != null) {
+      $result.content = content;
+    }
+    return $result;
+  }
+  ChatMessage._() : super();
+  factory ChatMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ChatMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ChatMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'reversi'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'sender')
+    ..aOS(2, _omitFieldNames ? '' : 'content')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ChatMessage clone() => ChatMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ChatMessage copyWith(void Function(ChatMessage) updates) => super.copyWith((message) => updates(message as ChatMessage)) as ChatMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ChatMessage create() => ChatMessage._();
+  ChatMessage createEmptyInstance() => create();
+  static $pb.PbList<ChatMessage> createRepeated() => $pb.PbList<ChatMessage>();
+  @$core.pragma('dart2js:noInline')
+  static ChatMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ChatMessage>(create);
+  static ChatMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get sender => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set sender($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSender() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSender() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get content => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set content($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasContent() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearContent() => clearField(2);
+}
+
 /// Mensagem de inicialização
 class InitializeRequest extends $pb.GeneratedMessage {
   factory InitializeRequest({

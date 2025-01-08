@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:flutter/material.dart';
 import 'package:reversigrpc/page/game_page.dart';
 import 'package:reversigrpc/widgets/chat_client_widget.dart';
@@ -49,6 +52,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 end: Alignment.bottomCenter,
               ),
             ),
+          ),
+          TextButton(
+            onPressed: () async {
+              final window = await DesktopMultiWindow.createWindow(jsonEncode({
+                'args1': 'Sub window',
+                'args2': 100,
+                'args3': true,
+                'business': 'business_test',
+              }));
+              window
+                ..setFrame(const Offset(0, 0) & const Size(1280, 720))
+                ..center()
+                ..setTitle('Player 2')
+                ..show();
+            },
+            child: const Text('Abrir uma nova janela'),
           ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

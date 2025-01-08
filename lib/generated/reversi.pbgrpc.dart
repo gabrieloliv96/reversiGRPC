@@ -21,10 +21,6 @@ export 'reversi.pb.dart';
 
 @$pb.GrpcServiceName('reversi.ReversiGameService')
 class ReversiGameServiceClient extends $grpc.Client {
-  static final _$sendMessage = $grpc.ClientMethod<$0.MessageRequest, $0.MessageResponse>(
-      '/reversi.ReversiGameService/SendMessage',
-      ($0.MessageRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.MessageResponse.fromBuffer(value));
   static final _$sendBoardMove = $grpc.ClientMethod<$0.BoardMoveRequest, $0.BoardMoveResponse>(
       '/reversi.ReversiGameService/SendBoardMove',
       ($0.BoardMoveRequest value) => value.writeToBuffer(),
@@ -45,16 +41,16 @@ class ReversiGameServiceClient extends $grpc.Client {
       '/reversi.ReversiGameService/InitializeClients',
       ($0.InitializeRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.InitializeResponse.fromBuffer(value));
+  static final _$chat = $grpc.ClientMethod<$0.ChatMessage, $0.ChatMessage>(
+      '/reversi.ReversiGameService/Chat',
+      ($0.ChatMessage value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.ChatMessage.fromBuffer(value));
 
   ReversiGameServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
       $core.Iterable<$grpc.ClientInterceptor>? interceptors})
       : super(channel, options: options,
         interceptors: interceptors);
-
-  $grpc.ResponseFuture<$0.MessageResponse> sendMessage($0.MessageRequest request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$sendMessage, request, options: options);
-  }
 
   $grpc.ResponseStream<$0.BoardMoveResponse> sendBoardMove($0.BoardMoveRequest request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$sendBoardMove, $async.Stream.fromIterable([request]), options: options);
@@ -75,6 +71,10 @@ class ReversiGameServiceClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.InitializeResponse> initializeClients($0.InitializeRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$initializeClients, request, options: options);
   }
+
+  $grpc.ResponseStream<$0.ChatMessage> chat($async.Stream<$0.ChatMessage> request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$chat, request, options: options);
+  }
 }
 
 @$pb.GrpcServiceName('reversi.ReversiGameService')
@@ -82,13 +82,6 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
   $core.String get $name => 'reversi.ReversiGameService';
 
   ReversiGameServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.MessageRequest, $0.MessageResponse>(
-        'SendMessage',
-        sendMessage_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.MessageRequest.fromBuffer(value),
-        ($0.MessageResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.BoardMoveRequest, $0.BoardMoveResponse>(
         'SendBoardMove',
         sendBoardMove_Pre,
@@ -124,10 +117,13 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.InitializeRequest.fromBuffer(value),
         ($0.InitializeResponse value) => value.writeToBuffer()));
-  }
-
-  $async.Future<$0.MessageResponse> sendMessage_Pre($grpc.ServiceCall call, $async.Future<$0.MessageRequest> request) async {
-    return sendMessage(call, await request);
+    $addMethod($grpc.ServiceMethod<$0.ChatMessage, $0.ChatMessage>(
+        'Chat',
+        chat,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.ChatMessage.fromBuffer(value),
+        ($0.ChatMessage value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.BoardMoveResponse> sendBoardMove_Pre($grpc.ServiceCall call, $async.Future<$0.BoardMoveRequest> request) async* {
@@ -150,10 +146,10 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
     return initializeClients(call, await request);
   }
 
-  $async.Future<$0.MessageResponse> sendMessage($grpc.ServiceCall call, $0.MessageRequest request);
   $async.Stream<$0.BoardMoveResponse> sendBoardMove($grpc.ServiceCall call, $0.BoardMoveRequest request);
   $async.Stream<$0.GiveUpResponse> giveUp($grpc.ServiceCall call, $0.GiveUpRequest request);
   $async.Stream<$0.TurnEndResponse> turnEnd($grpc.ServiceCall call, $0.TurnEndRequest request);
   $async.Stream<$0.FirstPlayerResponse> firstPlayer($grpc.ServiceCall call, $0.FirstPlayerRequest request);
   $async.Future<$0.InitializeResponse> initializeClients($grpc.ServiceCall call, $0.InitializeRequest request);
+  $async.Stream<$0.ChatMessage> chat($grpc.ServiceCall call, $async.Stream<$0.ChatMessage> request);
 }

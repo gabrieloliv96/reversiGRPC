@@ -49,37 +49,6 @@ class GrpcClient {
     await _channel.shutdown();
   }
 
-  
-
-  // // Método para enviar e receber mensagens
-  // Future<void> sendMessage(String sender, String content) async {
-  //   final call = stub.chat(); // Método gRPC bidirecional
-  //   call.send(MessageRequest()
-  //     ..sender = sender
-  //     ..content = content);
-
-  //   // Escuta a resposta do servidor
-  //   await for (var response in call) {
-  //     print('Resposta do servidor: ${response.reply}');
-  //   }
-  // }
-
-  // // Enviar uma mensagem (como um chat entre os jogadores)
-  // Future<String> sendMessage(String sender, String content) async {
-  //   try {
-  //     final request = MessageRequest()
-  //       ..sender = sender
-  //       ..content = content;
-
-  //     final response = await _stub.sendMessage(request);
-  //     print('Resposta do servidor: ${response.reply}');
-  //     return response.reply;
-  //   } catch (e) {
-  //     print('Erro ao enviar mensagem: $e');
-  //     return 'Erro ao enviar mensagem';
-  //   }
-  // }
-
   // Enviar um movimento no tabuleiro (streaming)
   Stream<BoardMoveResponse> sendBoardMove(int boardH, int boardV) async* {
     try {

@@ -45,6 +45,10 @@ class ReversiGameServiceClient extends $grpc.Client {
       '/reversi.ReversiGameService/Chat',
       ($0.ChatMessage value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ChatMessage.fromBuffer(value));
+  static final _$game = $grpc.ClientMethod<$0.GameMessage, $0.GameMessage>(
+      '/reversi.ReversiGameService/Game',
+      ($0.GameMessage value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GameMessage.fromBuffer(value));
 
   ReversiGameServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -74,6 +78,10 @@ class ReversiGameServiceClient extends $grpc.Client {
 
   $grpc.ResponseStream<$0.ChatMessage> chat($async.Stream<$0.ChatMessage> request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$chat, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.GameMessage> game($async.Stream<$0.GameMessage> request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$game, request, options: options);
   }
 }
 
@@ -124,6 +132,13 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.ChatMessage.fromBuffer(value),
         ($0.ChatMessage value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GameMessage, $0.GameMessage>(
+        'Game',
+        game,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.GameMessage.fromBuffer(value),
+        ($0.GameMessage value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.BoardMoveResponse> sendBoardMove_Pre($grpc.ServiceCall call, $async.Future<$0.BoardMoveRequest> request) async* {
@@ -152,4 +167,5 @@ abstract class ReversiGameServiceBase extends $grpc.Service {
   $async.Stream<$0.FirstPlayerResponse> firstPlayer($grpc.ServiceCall call, $0.FirstPlayerRequest request);
   $async.Future<$0.InitializeResponse> initializeClients($grpc.ServiceCall call, $0.InitializeRequest request);
   $async.Stream<$0.ChatMessage> chat($grpc.ServiceCall call, $async.Stream<$0.ChatMessage> request);
+  $async.Stream<$0.GameMessage> game($grpc.ServiceCall call, $async.Stream<$0.GameMessage> request);
 }

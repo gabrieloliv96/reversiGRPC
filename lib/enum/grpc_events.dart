@@ -9,4 +9,5 @@ class GrpcEvents {
   static final GrpcEvents aceptGiveUp = GrpcEvents._('acept-give-up');
   static final GrpcEvents turnEnd = GrpcEvents._('turn-end');
   static final GrpcEvents firstPlayer = GrpcEvents._('first-player');
+  static final GrpcEvents start = GrpcEvents._('start');
 }

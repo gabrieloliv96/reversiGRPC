@@ -1,6 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:reversigrpc/enum/grpc_events.dart';
 import 'package:reversigrpc/enum/messages.dart';
+import 'package:reversigrpc/enum/request.dart';
+import 'package:reversigrpc/generated/reversi.pb.dart';
 import 'package:reversigrpc/services/grpc.dart';
 
 const Color grayColor = Colors.grey;
@@ -19,6 +23,7 @@ class _GamePageState extends State<GamePage> {
       List.generate(8, (_) => List.filled(8, grayColor));
   Color currentColor = blackColor;
   late GrpcClient _client;
+  late StreamController<GameMessage> _gameController;
   bool canPlay = false;
   bool hasFirst = false;
   bool black = true;
@@ -27,14 +32,35 @@ class _GamePageState extends State<GamePage> {
   void initState() {
     super.initState();
     _client = GrpcClient(); // Instanciando o Singleton
-    // _initializeGrpcClient();
-    // _handleComingMessages(); // Alterado para o método gRPC
+    _gameController = StreamController<GameMessage>();
+    _startGameStream();
     _initializeBoard();
   }
 
-  // Future<void> _initializeGrpcClient() async {
-  //   await _client.init('Game');
-  // }
+  void _startGameStream() async {
+    final call = _client.stub.game(_gameController.stream);
+
+    await for (var message in call) {
+      if (message.event == GrpcEvents.firstPlayer.event) {
+        setState(() {
+          hasFirst = true;
+          canPlay = false;
+          black = true;
+        });
+      } else if (message.event == GrpcEvents.boardMovement.event) {
+        var coordenadas = message.content.split(',');
+        setState(() {
+          int x = int.parse(coordenadas[0].trim());
+          int y = int.parse(coordenadas[1].trim());
+          _board[x][y] = !black ? blackColor : whiteColor;
+          _flipPieces(x, y, currentColor == blackColor ? 0 : 1);
+        });
+        canPlay = true;
+      }
+    }
+  }
+
+  void _sendRequest(GrpcEvents event, String message) {}
 
   void _initializeBoard() {
     _board[3][3] = whiteColor;
@@ -45,7 +71,12 @@ class _GamePageState extends State<GamePage> {
   }
 
   void _handleFirstPlayer() {
-    _client.firstPlayer(1); // Para o jogador 1 começar
+    final message = GameMessage()
+      ..event = GrpcEvents.firstPlayer.event
+      ..content = '';
+    // Enviando o evento
+    _gameController.add(message);
+
     setState(() {
       hasFirst = true;
       canPlay = true;
@@ -79,43 +110,6 @@ class _GamePageState extends State<GamePage> {
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
     _client.giveUp(black ? 'black' : 'white');
   }
-
-  // void _handleComingMessages() async {
-  //   try {
-  //     await for (var move in _client.sendBoardMove(BoardMoveRequest())) {
-  //       setState(() {
-  //         _flipPieces(move.boardH, move.boardV, black ? 0 : 1);
-  //         _board[move.boardH][move.boardV] = !black ? blackColor : whiteColor;
-  //         _turnStart();
-  //       });
-  //     }
-
-  //     await for (var endTurn in _client.turnEnd()) {
-  //       setState(() {
-  //         canPlay = true;
-  //       });
-  //     }
-
-  //     await for (var firstPlayer in _client.firstPlayer()) {
-  //       _hasFirst();
-  //     }
-
-  //     await for (var giveUp in _client.giveUp()) {
-  //       _showGiveUpRequest();
-  //     }
-
-  //     await for (var acceptGiveUp in _client.acceptGiveUp()) {
-  //       final SnackBar snackbar = SnackBar(
-  //         content: Text(Messages.loseByGivingUp),
-  //         backgroundColor: Colors.red,
-  //       );
-  //       ScaffoldMessenger.of(context).showSnackBar(snackbar);
-  //       _resetBoard();
-  //     }
-  //   } catch (e) {
-  //     print('Error receiving gRPC messages: $e');
-  //   }
-  // }
 
   void _showGiveUpRequest() async {
     showDialog(
@@ -187,7 +181,12 @@ class _GamePageState extends State<GamePage> {
       canPlay = false;
       currentColor = currentColor == blackColor ? whiteColor : blackColor;
     });
-    _client.sendBoardMove(x, y);
+    final message = GameMessage()
+      ..event = GrpcEvents.boardMovement.event
+      ..content = '$x, $y';
+    // Enviando o evento
+    _gameController.add(message);
+
     _turnEnd();
     _checkWinner();
   }

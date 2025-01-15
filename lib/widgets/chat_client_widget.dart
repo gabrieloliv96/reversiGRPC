@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:reversigrpc/enum/grpc_events.dart';
@@ -21,6 +22,7 @@ class _ChatClientState extends State<ChatClient> {
   final FocusNode _messageFocusNode = FocusNode();
   List<Message> mensagens = [];
   late StreamController<ChatMessage> _chatStreamController;
+  int idUser = Random().nextInt(800);
 
   @override
   void initState() {
@@ -49,50 +51,16 @@ class _ChatClientState extends State<ChatClient> {
 
   void _sendMessage(String content) {
     final message = ChatMessage()
-      ..sender = 'Cliente 1' // Substitua pelo nome do usuário
+      ..sender = idUser.toString() // Substitua pelo nome do usuário
       ..content = content;
 
     // Enviar a mensagem através do fluxo
     _chatStreamController.add(message);
     setState(() {
       mensagens.add(Message(mensagem: message.content, isSent: true));
+      _textController.clear();
     });
   }
-  //  void _sendMessage() {
-  //   if (_textController.text.isNotEmpty) {
-  //     mensagens.add(
-  //       Message(mensagem: _textController.text),
-  //     );
-  //     _client.sendMessage(message: _textController.text);
-  //     _textController.clear();
-  //     _messageFocusNode.requestFocus();
-  //     setState(() {});
-  //   }
-  // }
-
-  // Future<void> _handleReceviedMessages() async {
-  //   final response = await _client.stub.sendMessage(
-  //     MessageRequest()..
-  //   );
-  //   setState(() {
-  //     mensagens.add(Message(mensagem: response.reply));
-  //   });
-  //   // _client.socket.on(
-  //   //   GrpcEvents.message.event,
-  //   //   (message) {
-  //   //     setState(
-  //   //       () {
-  //   //         mensagens.add(
-  //   //           Message(
-  //   //             mensagem: message,
-  //   //             isSent: false,
-  //   //           ),
-  //   //         );
-  //   //       },
-  //   //     );
-  //   //   },
-  //   // );
-  // }
 
   @override
   Widget build(BuildContext context) {

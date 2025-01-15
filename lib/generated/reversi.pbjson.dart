@@ -27,6 +27,20 @@ final $typed_data.Uint8List chatMessageDescriptor = $convert.base64Decode(
     'CgtDaGF0TWVzc2FnZRIWCgZzZW5kZXIYASABKAlSBnNlbmRlchIYCgdjb250ZW50GAIgASgJUg'
     'djb250ZW50');
 
+@$core.Deprecated('Use gameMessageDescriptor instead')
+const GameMessage$json = {
+  '1': 'GameMessage',
+  '2': [
+    {'1': 'event', '3': 1, '4': 1, '5': 9, '10': 'event'},
+    {'1': 'content', '3': 2, '4': 1, '5': 9, '10': 'content'},
+  ],
+};
+
+/// Descriptor for `GameMessage`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List gameMessageDescriptor = $convert.base64Decode(
+    'CgtHYW1lTWVzc2FnZRIUCgVldmVudBgBIAEoCVIFZXZlbnQSGAoHY29udGVudBgCIAEoCVIHY2'
+    '9udGVudA==');
+
 @$core.Deprecated('Use initializeRequestDescriptor instead')
 const InitializeRequest$json = {
   '1': 'InitializeRequest',

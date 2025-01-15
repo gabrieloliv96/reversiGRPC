@@ -78,6 +78,70 @@ class ChatMessage extends $pb.GeneratedMessage {
   void clearContent() => clearField(2);
 }
 
+class GameMessage extends $pb.GeneratedMessage {
+  factory GameMessage({
+    $core.String? event,
+    $core.String? content,
+  }) {
+    final $result = create();
+    if (event != null) {
+      $result.event = event;
+    }
+    if (content != null) {
+      $result.content = content;
+    }
+    return $result;
+  }
+  GameMessage._() : super();
+  factory GameMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GameMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GameMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'reversi'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'event')
+    ..aOS(2, _omitFieldNames ? '' : 'content')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GameMessage clone() => GameMessage()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GameMessage copyWith(void Function(GameMessage) updates) => super.copyWith((message) => updates(message as GameMessage)) as GameMessage;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GameMessage create() => GameMessage._();
+  GameMessage createEmptyInstance() => create();
+  static $pb.PbList<GameMessage> createRepeated() => $pb.PbList<GameMessage>();
+  @$core.pragma('dart2js:noInline')
+  static GameMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GameMessage>(create);
+  static GameMessage? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get event => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set event($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasEvent() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEvent() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get content => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set content($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasContent() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearContent() => clearField(2);
+}
+
 /// Mensagem de inicialização
 class InitializeRequest extends $pb.GeneratedMessage {
   factory InitializeRequest({

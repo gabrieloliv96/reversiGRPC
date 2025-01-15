@@ -54,8 +54,17 @@ class _GamePageState extends State<GamePage> {
           int y = int.parse(coordenadas[1].trim());
           _board[x][y] = !black ? blackColor : whiteColor;
           _flipPieces(x, y, currentColor == blackColor ? 0 : 1);
+          canPlay = true;
         });
-        canPlay = true;
+      } else if (message.event == GrpcEvents.giveUp.event) {
+        _showGiveUpRequest();
+      } else if (message.event == GrpcEvents.aceptGiveUp.event) {
+        final SnackBar snackbar = SnackBar(
+          content: Text(Messages.loseByGivingUp),
+          backgroundColor: Colors.red,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+        _resetBoard();
       }
     }
   }
@@ -108,7 +117,11 @@ class _GamePageState extends State<GamePage> {
       backgroundColor: Colors.yellowAccent,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
-    _client.giveUp(black ? 'black' : 'white');
+    final message = GameMessage()
+      ..event = GrpcEvents.giveUp.event
+      ..content = '';
+    // Enviando o evento
+    _gameController.add(message);
   }
 
   void _showGiveUpRequest() async {
@@ -163,7 +176,15 @@ class _GamePageState extends State<GamePage> {
       backgroundColor: Colors.green,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+
     // _client.acceptGiveUp();
+
+    final message = GameMessage()
+      ..event = GrpcEvents.aceptGiveUp.event
+      ..content = '';
+
+    // Enviando o evento
+    _gameController.add(message);
     _resetBoard();
   }
 
